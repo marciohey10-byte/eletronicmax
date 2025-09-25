@@ -1,0 +1,142 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f7f7f7;
+  color: #222;
+}
+
+/* CONTAINER */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* HEADER */
+header {
+  background-color: #000;
+  color: #fff;
+  padding: 20px 0;
+}
+
+header h1 {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+header nav ul {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+  margin-top: 10px;
+}
+
+header nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+header nav ul li a:hover {
+  text-decoration: underline;
+}
+
+/* HERO */
+.hero {
+  background: url('banner.jpg') center center / cover no-repeat;
+  color: #fff;
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.hero h2 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.hero .btn {
+  background-color: #00c37a;
+  color: #fff;
+  padding: 15px 30px;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 6px;
+}
+
+.hero .btn:hover {
+  background-color: #00a66b;
+}
+
+/* PRODUTOS */
+.produtos h2 {
+  font-size: 28px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.grade-produtos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
+}
+
+.produto {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.produto img {
+  width: 100%;
+  height: 220px;
+  object-fit: contain;
+  margin-bottom: 15px;
+}
+
+.produto h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.produto p {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.produto .preco {
+  font-size: 16px;
+  font-weight: bold;
+  color: #00c37a;
+  margin-bottom: 15px;
+  display: block;
+}
+
+.produto .btn {
+  background-color: #000;
+  color: #fff;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.produto .btn:hover {
+  background-color: #333;
+}
+
+/* FOOTER */
+footer {
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+  margin-top: 50px;
+}
