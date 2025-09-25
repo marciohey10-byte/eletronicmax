@@ -4,166 +4,54 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EletronicMax - Loja Oficial</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #121212;
-      color: #f0f0f0;
-    }
-
-    header {
-      background-color: #1e1e1e;
-      padding: 20px;
-      text-align: center;
-      border-bottom: 2px solid #333;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 2em;
-    }
-
-    header p {
-      color: #ccc;
-      margin-top: 5px;
-    }
-
-    .banner {
-      background-image: url('https://i.imgur.com/uvBOkJN.jpeg');
-      background-size: cover;
-      background-position: center;
-      height: 200px;
-    }
-
-    .produtos {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      padding: 20px;
-      gap: 20px;
-    }
-
-    .card {
-      background-color: #1f1f1f;
-      border-radius: 8px;
-      overflow: hidden;
-      width: 250px;
-      box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
-      transition: transform 0.3s;
-    }
-
-    .card:hover {
-      transform: scale(1.03);
-    }
-
-    .card img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-    }
-
-    .card-content {
-      padding: 15px;
-    }
-
-    .card h3 {
-      margin: 0 0 10px 0;
-      font-size: 1.1em;
-    }
-
-    .card p {
-      margin: 5px 0;
-      color: #aaa;
-    }
-
-    .botao {
-      display: block;
-      text-align: center;
-      background-color: #00c853;
-      color: #fff;
-      text-decoration: none;
-      padding: 10px;
-      border-radius: 4px;
-      margin-top: 10px;
-    }
-
-    footer {
-      background-color: #1e1e1e;
-      text-align: center;
-      padding: 20px;
-      font-size: 0.9em;
-      color: #aaa;
-    }
-
-    footer a {
-      color: #00c853;
-      text-decoration: none;
-    }
-  </style>
+  <title>Loja EletronicMax</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
   <header>
-    <h1>EletronicMax</h1>
-    <p>Produtos eletrônicos direto no WhatsApp</p>
+    <div class="container">
+      <h1>EletronicMax</h1>
+      <nav>
+        <ul>
+          <li><a href="#">Início</a></li>
+          <li><a href="#produtos">Produtos</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
-  <div class="banner"></div>
+  <section class="hero">
+    <div class="container">
+      <h2>Os eletrônicos que você procura com entrega rápida e preço justo!</h2>
+      <a href="#produtos" class="btn">Ver Produtos</a>
+    </div>
+  </section>
 
-  <div class="produtos">
-    <!-- PRODUTOS SERÃO INSERIDOS AQUI VIA SCRIPT -->
-  </div>
+  <section id="produtos" class="produtos">
+    <div class="container">
+      <h2>Produtos em Destaque</h2>
+      <div class="grade-produtos">
+        <div class="produto">
+          <img src="img/produto01.jpg" alt="Produto 1">
+          <h3>Produto 1</h3>
+          <p>Descrição breve do produto 1</p>
+          <span class="preco">R$ 199,90</span>
+          <a href="https://wa.me/13996919111" class="btn">Comprar via WhatsApp</a>
+        </div>
+
+        <!-- Replicar este bloco para os outros 19 produtos -->
+
+      </div>
+    </div>
+  </section>
 
   <footer>
-    <p>&copy; 2025 EletronicMax - Todos os direitos reservados.</p>
-    <p>
-      <a href="#">Política de Troca</a> |
-      <a href="#">Entrega</a> |
-      <a href="#">Contato</a>
-    </p>
+    <div class="container">
+      <p>&copy; 2025 EletronicMax. Todos os direitos reservados.</p>
+    </div>
   </footer>
-
-  <script>
-    const produtos = [
-      { nome: "Fone Bluetooth PRO X9", preco: "R$ 89,90", imagem: "produto_01.jpeg" },
-      { nome: "Smartwatch FitSense", preco: "R$ 149,90", imagem: "produto_02.jpeg" },
-      { nome: "Mini Projetor Portátil HD", preco: "R$ 299,00", imagem: "produto_03.jpeg" },
-      { nome: "Ring Light com Tripé", preco: "R$ 79,90", imagem: "produto_04.jpeg" },
-      { nome: "Caixa de Som Bluetooth LED", preco: "R$ 129,90", imagem: "produto_05.jpeg" },
-      { nome: "Teclado Gamer Mecânico RGB", preco: "R$ 199,90", imagem: "produto_06.jpeg" },
-      { nome: "Mousepad XXL Iluminado", preco: "R$ 59,90", imagem: "produto_07.jpeg" },
-      { nome: "Smartwatch PulseFit 3", preco: "R$ 159,00", imagem: "produto_08.jpeg" },
-      { nome: "Câmera de Segurança WiFi", preco: "R$ 89,00", imagem: "produto_09.jpeg" },
-      { nome: "Hub USB 4 Portas", preco: "R$ 39,90", imagem: "produto_10.jpeg" },
-      { nome: "Lâmpada Inteligente RGB", preco: "R$ 49,90", imagem: "produto_11.jpeg" },
-      { nome: "Carregador Rápido 3.0", preco: "R$ 29,90", imagem: "produto_12.jpeg" },
-      { nome: "Relógio Digital LED", preco: "R$ 44,90", imagem: "produto_13.jpeg" },
-      { nome: "Controle Bluetooth PS4", preco: "R$ 109,00", imagem: "produto_14.jpeg" },
-      { nome: "Cabo Tipo C Reforçado", preco: "R$ 19,90", imagem: "produto_15.jpeg" },
-      { nome: "Webcam HD 1080p", preco: "R$ 89,90", imagem: "produto_16.jpeg" },
-      { nome: "Echo Dot Mini Smart", preco: "R$ 259,90", imagem: "produto_17.jpeg" },
-      { nome: "Cooler Base Notebook", preco: "R$ 69,90", imagem: "produto_18.jpeg" },
-      { nome: "Fita LED RGB com Controle", preco: "R$ 59,90", imagem: "produto_19.jpeg" },
-      { nome: "Power Bank 20.000mAh", preco: "R$ 129,00", imagem: "produto_20.jpeg" }
-    ];
-
-    const container = document.querySelector('.produtos');
-    produtos.forEach(produto => {
-      const card = document.createElement('div');
-      card.className = 'card';
-      card.innerHTML = `
-        <img src="${produto.imagem}" alt="${produto.nome}" />
-        <div class="card-content">
-          <h3>${produto.nome}</h3>
-          <p>${produto.preco}</p>
-          <a class="botao" target="_blank" href="https://wa.me/551399691911?text=Ol%C3%A1%2C+tenho+interesse+no+produto:+${encodeURIComponent(produto.nome)}">Comprar via WhatsApp</a>
-        </div>
-      `;
-      container.appendChild(card);
-    });
-  </script>
 </body>
 
 </html>
