@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <!-- META BÁSICO -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mini Loja Pro — Exemplo</title>
+
+  <!--
+    🔎 OBJETIVO DESTE ARQUIVO (MAPA):
+    - HTML  = estrutura (cabeçalho, categorias, produtos, rodapé)
+    - CSS   = visual (cores, tipografia, grid, responsividade, dark mode)
+    - JS    = comportamento (filtros, busca, carrinho, persistência)
+
+    📌 OBS: Em Shopify você trocaria partes estáticas por Liquid ({{ product.title }})
+            e em WooCommerce por PHP/Twig. No React/Next, os dados viriam por props/APIs.
+  -->
+
+  <style>
+    /* ==========================
+       🎨 CSS — VISUAL/ESTILO
+       ========================== */
+    :root {
+      --bg: #0b1016;
+      --card: #121923;
+      --text: #e8eef5;
+      --muted: #9fb0c3;
+      --brand: #4f8cff;
+      --brand-2: #59f9c3;
+      --stroke: #1f2a36;
+      --danger: #ff5a7a;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, #0a0f15 0%, #0b1016 100%);
+      color: var(--text);
+      font: 500 16px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      letter-spacing: .2px;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    button, input, select { font: inherit; }
+
+    /* Header */
+    .header {
+      position: sticky; top: 0; z-index: 30;
+      background: rgba(9,14,20,.85);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--stroke);
+    }
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 12px 16px; }
+    .row { display: flex; align-items: center; gap: 12px; }
+    .space { justify-content: space-between; }
+
+    .logo {
+      display: flex; align-items: center; gap: 10px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 1.5px;
+    }
+    .logo-badge {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: radial-gradient(65% 65% at 35% 25%, var(--brand) 0%, #295fff 60%, #153cb6 100%);
+      box-shadow: 0 10px 30px rgba(79,140,255,.35), inset 0 0 14px rgba(255,255,255,.15);
+      border: 1px solid #2b4ea8;
+    }
+
+    .search {
+      flex: 1; display: flex; align-items: center; gap: 8px;
+      background: var(--card); border: 1px solid var(--stroke);
+      border-radius: 14px; padding: 8px 12px;
+    }
+    .search input {
+      flex: 1; background: transparent; border: 0; outline: none; color: var(--text);
+    }
+    .btn {
+      padding: 10px 14px; border-radius: 12px; border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, #16202c 0%, #0f1720 100%);
+      color: var(--text); cursor: pointer; transition: .2s; display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,.25); }
+    .btn.primary { background: linear-gradient(180deg, var(--brand) 0%, #2b6cff 100%); border-color: #2b6cff; color: #fff; }
+    .btn.danger { background: linear-gradient(180deg, #ff6d8a 0%, #ff3b6a 100%); border-color: #ff3b6a; }
+
+    /* Filtros / categorias */
+    .filters { border-bottom: 1px solid var(--stroke); background: rgba(10,15,22,.6); }
+    .chips { display: flex; gap: 10px; flex-wrap: wrap; }
+    .chip {
+      padding: 8px 12px; border: 1px solid var(--stroke); border-radius: 999px; color: var(--muted);
+      cursor: pointer; transition: .2s; background: #111823;
+    }
+    .chip.active, .chip:hover { color: #0b1220; background: var(--brand-2); border-color: #2abf95; }
+
+    /* Main */
+    main { max-width: 1200px; margin: 0 auto; padding: 24px 16px 80px; }
+
+    .hero {
+      border: 1px solid var(--stroke); border-radius: 20px; padding: 20px; margin-bottom: 20px;
+      background: radial-gradient(120% 120% at 0% 0%, rgba(79,140,255,.15) 0%, rgba(0,0,0,0) 60%), var(--card);
+    }
+    .hero h1 { margin: 0 0 6px; font-size: clamp(20px, 2.6vw, 32px); }
+    .hero p { margin: 0; color: var(--muted); }
+
+    .toolbar { display: flex; gap: 10px; align-items: center; margin: 12px 0 20px; flex-wrap: wrap; }
+    .select { background: var(--card); color: var(--text); border: 1px solid var(--stroke); border-radius: 12px; padding: 10px 12px; }
+
+    .grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+    }
+    @media (max-width: 1000px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 700px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 430px) { .grid { grid-template-columns: 1fr; } }
+
+    .card {
+      background: var(--card); border: 1px solid var(--stroke); border-radius: 18px; overflow: hidden; display: flex; flex-direction: column;
+      transition: .2s; position: relative;
+    }
+    .card:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(0,0,0,.25); }
+    .card .img { aspect-ratio: 1/1; background: #0e1520; display: grid; place-items: center; }
+    .card .img img { width: 88%; height: 88%; object-fit: contain; filter: drop-shadow(0 12px 18px rgba(0,0,0,.45)); }
+    .badge { position: absolute; top: 10px; left: 10px; background: #0a121d; border: 1px solid var(--stroke); color: var(--muted); padding: 6px 10px; border-radius: 999px; font-size: 12px; }
+    .body { padding: 12px; display: grid; gap: 6px; }
+    .title { font-weight: 700; }
+    .muted { color: var(--muted); font-size: 14px; }
+    .price { font-size: 18px; font-weight: 800; }
+
+    .card .actions { display: flex; gap: 8px; margin-top: 8px; }
+    .qty { display: grid; grid-auto-flow: column; gap: 8px; align-items: center; }
+
+    /* Cart modal */
+    .drawer {
+      position: fixed; inset: 0 0 0 auto; width: 380px; max-width: 92vw; background: #0c1118; border-left: 1px solid var(--stroke);
+      transform: translateX(110%); transition: transform .25s ease; z-index: 60; display: flex; flex-direction: column;
+    }
+    .drawer.open { transform: translateX(0); }
+    .drawer-header { padding: 14px; border-bottom: 1px solid var(--stroke); display: flex; justify-content: space-between; align-items: center; }
+    .drawer-body { padding: 14px; overflow: auto; display: grid; gap: 12px; }
+    .drawer-footer { margin-top: auto; padding: 14px; border-top: 1px solid var(--stroke); display: grid; gap: 10px; }
+
+    .line { display: grid; grid-template-columns: 56px 1fr auto; gap: 10px; align-items: center; border: 1px solid var(--stroke); border-radius: 12px; padding: 8px; background: #0d1420; }
+    .line img { width: 56px; height: 56px; object-fit: contain; }
+
+    /* Rodapé */
+    footer { border-top: 1px solid var(--stroke); background: #0a0f16; }
+    .foot { max-width: 1200px; margin: 0 auto; padding: 26px 16px; color: var(--muted); display: grid; gap: 6px; }
+  </style>
+</head>
+<body>
+  <!-- ==========================
+       🧭 HEADER — ESTRUTURA (HTML)
+       ========================== -->
+  <header class="header">
+    <div class="wrap row space">
+      <a class="logo" href="#">
+        <span class="logo-badge" aria-hidden="true"></span>
+        <span>EletronicMax</span>
+      </a>
+
+      <div class="search" role="search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 21l-4.35-4.35" stroke="#7fa3c4" stroke-width="2" stroke-linecap="round"/><circle cx="11" cy="11" r="7" stroke="#7fa3c4" stroke-width="2"/></svg>
+        <input id="q" type="search" placeholder="Buscar produtos..." autocomplete="off" />
+        <button class="btn" id="clearSearch" title="Limpar">Limpar</button>
+      </div>
+
+      <div class="row">
+        <button class="btn" id="themeToggle" title="Alternar tema">Tema</button>
+        <button class="btn primary" id="openCart" aria-haspopup="dialog">Carrinho · <span id="cartCount">0</span></button>
+      </div>
+    </div>
+
+    <div class="filters">
+      <div class="wrap">
+        <div class="chips" id="chips"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================
+       🧱 MAIN — GRID DE PRODUTOS
+       ========================== -->
+  <main>
+    <section class="hero">
+      <h1>Ofertas de Hoje</h1>
+      <p>Exemplo de loja profissional com HTML + CSS + JS. Substitua os dados por sua API/Shopify/WooCommerce.</p>
+      <div class="toolbar">
+        <select id="sort" class="select" aria-label="Ordenar">
+          <option value="featured">Ordenar: Destaques</option>
+          <option value="price-asc">Preço: menor → maior</option>
+          <option value="price-desc">Preço: maior → menor</option>
+          <option value="rating-desc">Avaliação: melhor</option>
+        </select>
+        <button class="btn" id="resetFilters">Resetar filtros</button>
+      </div>
+    </section>
+
+    <section id="grid" class="grid" aria-live="polite"></section>
+  </main>
+
+  <!-- ==========================
+       🛒 CART DRAWER (MODAL)
+       ========================== -->
+  <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="cartTitle">
+    <div class="drawer-header">
+      <strong id="cartTitle">Seu carrinho</strong>
+      <button class="btn" id="closeCart">Fechar</button>
+    </div>
+    <div class="drawer-body" id="lines"></div>
+    <div class="drawer-footer">
+      <div class="row space"><span>Total</span><strong id="total">R$ 0,00</strong></div>
+      <button class="btn primary">Finalizar compra</button>
+      <button class="btn danger" id="clearCart">Limpar carrinho</button>
+    </div>
+  </aside>
+
+  <!-- ==========================
+       📦 TEMPLATE DE CARD
+       ========================== -->
+  <template id="tpl">
+    <article class="card">
+      <div class="badge"></div>
+      <div class="img"><img alt="Imagem do produto"></div>
+      <div class="body">
+        <div class="title"></div>
+        <div class="muted category"></div>
+        <div class="row space">
+          <div class="price"></div>
+          <div class="muted rating"></div>
+        </div>
+        <div class="actions">
+          <button class="btn add">Adicionar</button>
+          <div class="qty">
+            <button class="btn minus" title="Diminuir">−</button>
+            <span class="amount">0</span>
+            <button class="btn plus" title="Aumentar">+</button>
+          </div>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <!-- ==========================
+       🧠 JAVASCRIPT — LÓGICA/COMPORTAMENTO
+       ========================== -->
+  <script>
+    // 🔧 Dados simulados (substitua por API/Shopify/WooCommerce)
+    /**
+     * Em Shopify (Liquid), você renderizaria um JSON com {% for product in collections.all.products %}
+     * ou chamaria uma Storefront API (GraphQL) para buscar produtos dinamicamente.
+     */
+    const PRODUCTS = [
+      { id: 'p1', title: 'Fone Bluetooth X90', price: 149.9, category: 'Áudio', rating: 4.7, stock: 32, img: 'https://picsum.photos/seed/head1/800/800' },
+      { id: 'p2', title: 'Teclado Mecânico RGB', price: 229.0, category: 'Periféricos', rating: 4.8, stock: 18, img: 'https://picsum.photos/seed/keyb/800/800' },
+      { id: 'p3', title: 'Smartwatch Fit Pro', price: 199.0, category: 'Wearables', rating: 4.5, stock: 12, img: 'https://picsum.photos/seed/watch/800/800' },
+      { id: 'p4', title: 'Câmera 4K Action', price: 349.0, category: 'Câmeras', rating: 4.3, stock: 8,  img: 'https://picsum.photos/seed/cam4k/800/800' },
+      { id: 'p5', title: 'Carregador Turbo 30W', price: 79.9, category: 'Acessórios', rating: 4.6, stock: 50, img: 'https://picsum.photos/seed/charge/800/800' },
+      { id: 'p6', title: 'Mouse Gamer 16000DPI', price: 129.9, category: 'Periféricos', rating: 4.4, stock: 26, img: 'https://picsum.photos/seed/mouse/800/800' },
+      { id: 'p7', title: 'Caixa de Som 60W', price: 299.0, category: 'Áudio', rating: 4.9, stock: 6,  img: 'https://picsum.photos/seed/speaker/800/800' },
+      { id: 'p8', title: 'Webcam FullHD 60fps', price: 189.9, category: 'Câmeras', rating: 4.2, stock: 15, img: 'https://picsum.photos/seed/webcam/800/800' }
+    ];
+
+    const state = {
+      products: PRODUCTS,
+      filtered: PRODUCTS,
+      cart: JSON.parse(localStorage.getItem('cart') || '{}'),
+      category: 'Todos',
+      q: '',
+      sort: 'featured'
+    };
+
+    // 🧩 Utilidades
+    const $ = sel => document.querySelector(sel);
+    const $$ = sel => Array.from(document.querySelectorAll(sel));
+    const fmt = v => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+    // 🏷️ Categorias dinâmicas
+    const categories = ['Todos', ...Array.from(new Set(PRODUCTS.map(p => p.category)))];
+    const chips = $('#chips');
+    categories.forEach(cat => {
+      const el = document.createElement('button');
+      el.className = 'chip' + (cat === 'Todos' ? ' active' : '');
+      el.textContent = cat;
+      el.addEventListener('click', () => { selectCategory(cat); });
+      chips.appendChild(el);
+    });
+
+    function selectCategory(cat) {
+      state.category = cat;
+      $$('.chip').forEach(c => c.classList.toggle('active', c.textContent === cat));
+      applyFilters();
+    }
+
+    // 🔍 Busca + Ordenação
+    $('#q').addEventListener('input', e => { state.q = e.target.value.trim().toLowerCase(); applyFilters(); });
+    $('#clearSearch').addEventListener('click', () => { state.q = ''; $('#q').value = ''; applyFilters(); });
+    $('#sort').addEventListener('change', e => { state.sort = e.target.value; applyFilters(); });
+    $('#resetFilters').addEventListener('click', () => { state.q = ''; $('#q').value = ''; state.category = 'Todos'; state.sort = 'featured'; $$('.chip').forEach(c => c.classList.toggle('active', c.textContent === 'Todos')); applyFilters(); });
+
+    function applyFilters() {
+      let list = [...state.products];
+      if (state.category !== 'Todos') list = list.filter(p => p.category === state.category);
+      if (state.q) list = list.filter(p => p.title.toLowerCase().includes(state.q));
+      switch (state.sort) {
+        case 'price-asc': list.sort((a,b)=> a.price - b.price); break;
+        case 'price-desc': list.sort((a,b)=> b.price - a.price); break;
+        case 'rating-desc': list.sort((a,b)=> b.rating - a.rating); break;
+        default: list.sort((a,b)=> b.rating - a.rating || a.price - b.price); // destaque simples
+      }
+      state.filtered = list;
+      renderGrid();
+    }
+
+    // 🧱 Render de cards
+    const grid = $('#grid');
+    const tpl = $('#tpl');
+
+    function renderGrid() {
+      grid.innerHTML = '';
+      state.filtered.forEach(p => {
+        const node = tpl.content.cloneNode(true);
+        const card = node.querySelector('.card');
+        card.dataset.id = p.id;
+        card.querySelector('.badge').textContent = p.stock > 0 ? 'Em estoque' : 'Esgotado';
+        const img = card.querySelector('img');
+        img.src = p.img; img.alt = p.title;
+        card.querySelector('.title').textContent = p.title;
+        card.querySelector('.category').textContent = p.category;
+        card.querySelector('.price').textContent = fmt(p.price);
+        card.querySelector('.rating').textContent = `★ ${p.rating.toFixed(1)}`;
+        const amount = card.querySelector('.amount');
+        const qty = state.cart[p.id]?.qty || 0; amount.textContent = qty;
+
+        card.querySelector('.add').addEventListener('click', () => add(p.id, 1));
+        card.querySelector('.plus').addEventListener('click', () => add(p.id, 1));
+        card.querySelector('.minus').addEventListener('click', () => add(p.id, -1));
+
+        grid.appendChild(node);
+      });
+    }
+
+    // 🛒 Carrinho
+    function add(id, delta) {
+      const prod = state.products.find(p => p.id === id);
+      if (!prod) return;
+      const curr = state.cart[id]?.qty || 0;
+      const next = Math.max(0, curr + delta);
+      if (next === 0) delete state.cart[id];
+      else state.cart[id] = { id, qty: next, price: prod.price, title: prod.title, img: prod.img };
+      persistCart();
+      updateCartUI();
+      // Atualiza qty no card
+      const card = grid.querySelector(`.card[data-id="${id}"]`);
+      if (card) card.querySelector('.amount').textContent = next || 0;
+    }
+
+    function persistCart() {
+      localStorage.setItem('cart', JSON.stringify(state.cart));
+    }
+
+    function updateCartUI() {
+      const lines = $('#lines');
+      lines.innerHTML = '';
+      let total = 0; let count = 0;
+      Object.values(state.cart).forEach(item => {
+        total += item.qty * item.price; count += item.qty;
+        const row = document.createElement('div');
+        row.className = 'line';
+        row.innerHTML = `
+          <img src="${item.img}" alt="${item.title}">
+          <div>
+            <div>${item.title}</div>
+            <div class="muted">${fmt(item.price)} · <button class="btn" data-id="${item.id}" data-act="dec">−</button>
+            <strong>${item.qty}</strong>
+            <button class="btn" data-id="${item.id}" data-act="inc">+</button>
+            <button class="btn danger" data-id="${item.id}" data-act="del">Remover</button></div>
+          </div>
+          <strong>${fmt(item.qty * item.price)}</strong>
+        `;
+        lines.appendChild(row);
+      });
+      $('#cartCount').textContent = count;
+      $('#total').textContent = fmt(total);
+
+      // Delegação de eventos dos botões no carrinho
+      lines.onclick = (e) => {
+        const btn = e.target.closest('button');
+        if (!btn) return;
+        const id = btn.dataset.id; const act = btn.dataset.act;
+        if (act === 'inc') add(id, 1);
+        if (act === 'dec') add(id, -1);
+        if (act === 'del') { delete state.cart[id]; persistCart(); updateCartUI(); renderGrid(); }
+      };
+    }
+
+    // 🪟 Drawer (abrir/fechar)
+    const drawer = $('#drawer');
+    $('#openCart').addEventListener('click', () => drawer.classList.add('open'));
+    $('#closeCart').addEventListener('click', () => drawer.classList.remove('open'));
+    $('#clearCart').addEventListener('click', () => { state.cart = {}; persistCart(); updateCartUI(); renderGrid(); });
+
+    // 🌓 Tema (claro/escuro)
+    const KEY_THEME = 'theme-dark';
+    const setDark = (on) => document.documentElement.classList.toggle('dark', !!on);
+    const initDark = localStorage.getItem(KEY_THEME) === '1';
+    setDark(initDark);
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      const now = !document.documentElement.classList.contains('dark');
+      setDark(now);
+      localStorage.setItem(KEY_THEME, now ? '1' : '0');
+    });
+
+    // Estilos para modo escuro (usa classe .dark no <html>)
+    const styleDark = document.createElement('style');
+    styleDark.textContent = `
+      .dark body { background: #0b1016; }
+    `;
+    document.head.appendChild(styleDark);
+
+    // 🚀 Inicializa
+    applyFilters();
+    updateCartUI();
+  </script>
+</body>
+</html>
