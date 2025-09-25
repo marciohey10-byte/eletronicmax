@@ -1,57 +1,368 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Loja EletronicMax</title>
-  <link rel="stylesheet" href="style.css">
-</head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Despertar Estelar Shop — Top 10 Produtos Campeões</title>
+  <meta name="description" content="Página estilo Shopify com 10 produtos campeões prontos para vender em marketplaces (TikTok Shop, Shopee, Mercado Livre)." />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0b13;
+      --panel: #121221;
+      --soft: #1a1a2e;
+      --primary: #7c5cff;
+      --accent: #38e6b5;
+      --text: #e9e9f1;
+      --muted: #a0a0b8;
+      --danger: #ff647c;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; background:var(--bg); color:var(--text);
+      font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      line-height:1.6
+    }
+    a{color:inherit; text-decoration:none}
+    .container{max-width:1100px; margin:0 auto; padding:24px}
+    header{
+      position:sticky; top:0; z-index:20; backdrop-filter:saturate(140%) blur(6px);
+      background:rgba(11,11,19,.75); border-bottom:1px solid #1f2037
+    }
+    .topbar{display:flex; align-items:center; justify-content:space-between; gap:16px; padding:16px 24px}
+    .brand{display:flex; align-items:center; gap:12px}
+    .logo{width:38px; height:38px; border-radius:12px; background:linear-gradient(135deg,var(--primary),var(--accent)); display:grid; place-items:center; font-weight:800}
+    .brand h1{font-size:18px; margin:0; letter-spacing:.2px}
+    .badge{font-size:12px; padding:4px 10px; border-radius:999px; background:rgba(124,92,255,.15); color:var(--accent); border:1px solid rgba(124,92,255,.3)}
 
+    .hero{padding:28px 24px 8px}
+    .hero-inner{background:linear-gradient(135deg, rgba(124,92,255,.16), rgba(56,230,181,.12)); border:1px solid #22243e; border-radius:20px; padding:24px}
+    .hero h2{margin:0 0 6px; font-size:28px}
+    .hero p{margin:0; color:var(--muted)}
+
+    .controls{margin-top:16px; display:flex; gap:12px; flex-wrap:wrap}
+    .input, .select{background:var(--panel); border:1px solid #23243e; color:var(--text); border-radius:12px; padding:12px 14px; outline:none}
+    .input{flex:1 1 260px}
+    .btn{border:none; background:linear-gradient(135deg,var(--primary),#9b7bff); color:#fff; font-weight:700; padding:12px 16px; border-radius:12px; cursor:pointer}
+    .btn.whats{background:linear-gradient(135deg,var(--accent),#24c7a1); color:#051b14}
+
+    .grid{display:grid; grid-template-columns:repeat(1,1fr); gap:18px; margin-top:24px}
+    @media (min-width:640px){.grid{grid-template-columns:repeat(2,1fr)}}
+    @media (min-width:960px){.grid{grid-template-columns:repeat(3,1fr)}}
+
+    .card{background:var(--panel); border:1px solid #22243e; border-radius:18px; overflow:hidden; display:flex; flex-direction:column}
+    .thumb{aspect-ratio:4/3; width:100%; object-fit:cover; background:#0f0f1c}
+    .content{padding:14px 14px 6px}
+    .title{font-weight:700; margin:0 0 6px}
+    .price{display:flex; align-items:center; gap:8px; margin:4px 0 12px}
+    .price .sale{font-weight:800}
+    .price .compare{color:var(--muted); text-decoration:line-through; font-size:14px}
+    .tags{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px}
+    .tag{font-size:11px; padding:4px 8px; border-radius:999px; background:#15152a; border:1px solid #26274a; color:#bfc4ff}
+    .cta{display:flex; gap:8px; padding:12px 14px 16px}
+    .cta a{flex:1; text-align:center; padding:10px 12px; border-radius:12px; border:1px solid #2a2b4a; background:#16162a}
+    .cta a.primary{background:linear-gradient(135deg,var(--primary),#9b7bff); color:#fff; border:none}
+
+    footer{margin:40px 0 60px; color:var(--muted); text-align:center}
+    .note{font-size:12px; color:#97a0c3}
+
+    .floating-whats{position:fixed; right:18px; bottom:18px; z-index:40; display:flex; align-items:center; gap:10px}
+    .floating-whats a{display:inline-flex; align-items:center; gap:10px; padding:12px 14px; border-radius:999px; background:linear-gradient(135deg,var(--accent),#24c7a1); color:#051b14; font-weight:800; border:1px solid rgba(0,0,0,.1)}
+    .hide{display:none}
+  </style>
+</head>
 <body>
   <header>
-    <div class="container">
-      <h1>EletronicMax</h1>
-      <nav>
-        <ul>
-          <li><a href="#">Início</a></li>
-          <li><a href="#produtos">Produtos</a></li>
-          <li><a href="#contato">Contato</a></li>
-        </ul>
-      </nav>
+    <div class="topbar container">
+      <div class="brand">
+        <div class="logo">✦</div>
+        <h1>Despertar Estelar • Loja</h1>
+        <span class="badge">Shopify‑Style</span>
+      </div>
+      <div class="badge">Envio rápido no Brasil</div>
     </div>
   </header>
 
-  <section class="hero">
-    <div class="container">
-      <h2>Os eletrônicos que você procura com entrega rápida e preço justo!</h2>
-      <a href="#produtos" class="btn">Ver Produtos</a>
-    </div>
-  </section>
-
-  <section id="produtos" class="produtos">
-    <div class="container">
-      <h2>Produtos em Destaque</h2>
-      <div class="grade-produtos">
-        <div class="produto">
-          <img src="img/produto01.jpg" alt="Produto 1">
-          <h3>Produto 1</h3>
-          <p>Descrição breve do produto 1</p>
-          <span class="preco">R$ 199,90</span>
-          <a href="https://wa.me/13996919111" class="btn">Comprar via WhatsApp</a>
+  <main class="container">
+    <section class="hero">
+      <div class="hero-inner">
+        <h2>Top 10 Produtos Campeões</h2>
+        <p>Prontos para cadastrar no TikTok Shop, Shopee e Mercado Livre. Use os botões para apontar para seus anúncios ou venda direto no WhatsApp.</p>
+        <div class="controls">
+          <input id="q" class="input" type="search" placeholder="Buscar produto (ex: skincare, organização, camping)" />
+          <select id="cat" class="select">
+            <option value="">Todas as categorias</option>
+            <option>Beleza</option>
+            <option>Casa & Organização</option>
+            <option>Gadgets</option>
+            <option>Decoração</option>
+            <option>Fitness & Cozinha</option>
+            <option>Camping & Outdoor</option>
+          </select>
+          <button class="btn" id="btnReset">Limpar filtros</button>
+          <button class="btn whats" id="btnWhatsAll">Falar no WhatsApp</button>
         </div>
-
-        <!-- Replicar este bloco para os outros 19 produtos -->
-
+        <p class="note" style="margin-top:8px">Dica: substitua os links “Shopee/ML/TikTok” pelos seus anúncios. Arquivo 100% estático, funciona no GitHub Pages.</p>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <footer>
-    <div class="container">
-      <p>&copy; 2025 EletronicMax. Todos os direitos reservados.</p>
-    </div>
-  </footer>
+    <section id="grid" class="grid">
+      <!-- PRODUTOS -->
+      <!-- 1 -->
+      <article class="card" data-title="Mini Seladora Portátil USB" data-cat="Casa & Organização,Gadgets">
+        <img class="thumb" src="https://images.unsplash.com/photo-1518544801976-3e1883dd54ad?q=80&w=1200&auto=format&fit=crop" alt="Mini seladora portátil"/>
+        <div class="content">
+          <h3 class="title">Mini Seladora Portátil USB</h3>
+          <div class="price"><span class="sale">R$ 39,90</span> <span class="compare">R$ 59,90</span></div>
+          <div class="tags"><span class="tag">fecha pacotes</span><span class="tag">vídeo de transformação</span></div>
+          <p class="desc">Fecha embalagens em segundos. Ideal para cozinha e organização. Compacta e recarregável.</p>
+        </div>
+        <div class="cta">
+          <a class="primary" data-wa href="#">WhatsApp</a>
+          <a data-shopee href="#">Shopee</a>
+          <a data-ml href="#">Mercado Livre</a>
+          <a data-tt href="#">TikTok Shop</a>
+        </div>
+      </article>
+      <!-- 2 -->
+      <article class="card" data-title="Escova Alisadora Portátil 3 em 1" data-cat="Beleza,Gadgets">
+        <img class="thumb" src="https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=1200&auto=format&fit=crop" alt="Escova alisadora"/>
+        <div class="content">
+          <h3 class="title">Escova Alisadora Portátil 3 em 1</h3>
+          <div class="price"><span class="sale">R$ 89,00</span> <span class="compare">R$ 129,00</span></div>
+          <div class="tags"><span class="tag">antes & depois</span><span class="tag">portátil</span></div>
+          <p class="desc">Seca, modela e alisa de forma rápida. Perfeita para rotina corrida.</p>
+        </div>
+        <div class="cta">
+          <a class="primary" data-wa href="#">WhatsApp</a>
+          <a data-shopee href="#">Shopee</a>
+          <a data-ml href="#">Mercado Livre</a>
+          <a data-tt href="#">TikTok Shop</a>
+        </div>
+      </article>
+      <!-- 3 -->
+      <article class="card" data-title="Mini Projetor Portátil Full HD" data-cat="Gadgets,Decoração">
+        <img class="thumb" src="https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1200&auto=format&fit=crop" alt="Mini projetor"/>
+        <div class="content">
+          <h3 class="title">Mini Projetor Portátil Full HD</h3>
+          <div class="price"><span class="sale">R$ 399,00</span> <span class="compare">R$ 499,00</span></div>
+          <div class="tags"><span class="tag">100" cinema em casa</span><span class="tag">viral</span></div>
+          <p class="desc">Transforme qualquer parede em tela gigante. Ideal para filmes, jogos e apresentações.</p>
+        </div>
+        <div class="cta">
+          <a class="primary" data-wa href="#">WhatsApp</a>
+          <a data-shopee href="#">Shopee</a>
+          <a data-ml href="#">Mercado Livre</a>
+          <a data-tt href="#">TikTok Shop</a>
+        </div>
+      </article>
+      <!-- 4 -->
+      <article class="card" data-title="Organizador Giratório 360°" data-cat="Casa & Organização">
+        <img class="thumb" src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?q=80&w=1200&auto=format&fit=crop" alt="Organizador 360"/>
+        <div class="content">
+          <h3 class="title">Organizador Giratório 360°</h3>
+          <div class="price"><span class="sale">R$ 49,90</span> <span class="compare">R$ 69,90</span></div>
+          <div class="tags"><span class="tag">cosméticos</span><span class="tag">tempero</span></div>
+          <p class="desc">Gire e encontre! Organização instantânea para banheiro, cozinha e bancada.</p>
+        </div>
+        <div class="cta">
+          <a class="primary" data-wa href="#">WhatsApp</a>
+          <a data-shopee href="#">Shopee</a>
+          <a data-ml href="#">Mercado Livre</a>
+          <a data-tt href="#">TikTok Shop</a>
+        </div>
+      </article>
+      <!-- 5 -->
+      <article class="card" data-title="Mini Umidificador USB LED" data-cat="Gadgets,Decoração">
+        <img class="thumb" src="https://images.unsplash.com/photo-1617957796311-2b2c05118147?q=80&w=1200&auto=format&fit=crop" alt="Umidificador USB"/>
+        <div class="content">
+          <h3 class="title">Mini Umidificador USB LED</h3>
+          <div class="price"><span class="sale">R$ 59,90</span> <span class="compare">R$ 89,90</span></div>
+          <div class="tags"><span class="tag">aromaterapia</span><span class="tag">silencioso</span></div>
+          <p class="desc">Melhore o ar e o clima do seu ambiente. Luz suave, baixo consumo, ideal p/ escritório e quarto.</p>
+        </div>
+        <div class="cta">
+          <a class="primary" data-wa href="#">WhatsApp</a>
+          <a data-shopee href="#">Shopee</a>
+          <a data-ml href="#">Mercado Livre</a>
+          <a data-tt href="#">TikTok Shop</a>
+        </div>
+      </article>
+      <!-- 6 -->
+      <article class="card" data-title="Massageador Facial Roller Jade" data-cat="Beleza">
+        <img class="thumb" src="https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?q=80&w=1200&auto=format&fit=crop" alt="Roller Jade"/>
+        <div class="content">
+          <h3 class="title">Massageador Facial Roller Jade</h3>
+          <div class="price"><span class="sale">R$ 39,90</span> <span class="compare">R$ 59,90</span></div>
+          <div class="tags"><span class="tag">skincare</span><span class="tag">relax</span></div>
+          <p class="desc">Massagem facial que estimula circulação, drenagem e bem‑estar. Frescor instantâneo.</p>
+        </div>
+        <div class="cta">
+          <a class="primary" data-wa href="#">WhatsApp</a>
+          <a data-shopee href="#">Shopee</a>
+          <a data-ml href="#">Mercado Livre</a>
+          <a data-tt href="#">TikTok Shop</a>
+        </div>
+      </article>
+      <!-- 7 -->
+      <article class="card" data-title="Caneta Removedora de Pelos" data-cat="Beleza,Gadgets">
+        <img class="thumb" src="https://images.unsplash.com/photo-1600180614721-c3e15c54b538?q=80&w=1200&auto=format&fit=crop" alt="Removedora de pelos"/>
+        <div class="content">
+          <h3 class="title">Caneta Removedora de Pelos</h3>
+          <div class="price"><span class="sale">R$ 79,00</span> <span class="compare">R$ 119,00</span></div>
+          <div class="tags"><span class="tag">indolor</span><span class="tag">precisão</span></div>
+          <p class="desc">Depilação rápida, prática e indolor para buço e sobrancelhas. Cabe na bolsa.</p>
+        </div>
+        <div class="cta">
+          <a class="primary" data-wa href="#">WhatsApp</a>
+          <a data-shopee href="#">Shopee</a>
+          <a data-ml href="#">Mercado Livre</a>
+          <a data-tt href="#">TikTok Shop</a>
+        </div>
+      </article>
+      <!-- 8 -->
+      <article class="card" data-title="Luminária Lua 3D Touch" data-cat="Decoração">
+        <img class="thumb" src="https://images.unsplash.com/photo-1516905041604-7935af78f99c?q=80&w=1200&auto=format&fit=crop" alt="Luminária Lua"/>
+        <div class="content">
+          <h3 class="title">Luminária Lua 3D Touch</h3>
+          <div class="price"><span class="sale">R$ 89,90</span> <span class="compare">R$ 129,90</span></div>
+          <div class="tags"><span class="tag">astro vibe</span><span class="tag">ambiente</span></div>
+        <p class="desc">Lua em 3D com toque para ligar e trocar a temperatura de cor. Decoração que encanta.</p>
+        </div>
+        <div class="cta">
+          <a class="primary" data-wa href="#">WhatsApp</a>
+          <a data-shopee href="#">Shopee</a>
+          <a data-ml href="#">Mercado Livre</a>
+          <a data-tt href="#">TikTok Shop</a>
+        </div>
+      </article>
+      <!-- 9 -->
+      <article class="card" data-title="Cortador de Legumes Espiral" data-cat="Fitness & Cozinha,Casa & Organização">
+        <img class="thumb" src="https://images.unsplash.com/photo-1490474504059-bf2db5ab2348?q=80&w=1200&auto=format&fit=crop" alt="Cortador espiral"/>
+        <div class="content">
+          <h3 class="title">Cortador de Legumes Espiral</h3>
+          <div class="price"><span class="sale">R$ 39,00</span> <span class="compare">R$ 59,00</span></div>
+          <div class="tags"><span class="tag">fit</span><span class="tag">saladas</span></div>
+          <p class="desc">Crie espaguete de abobrinha e saladas criativas em segundos. Fácil de limpar.</p>
+        </div>
+        <div class="cta">
+          <a class="primary" data-wa href="#">WhatsApp</a>
+          <a data-shopee href="#">Shopee</a>
+          <a data-ml href="#">Mercado Livre</a>
+          <a data-tt href="#">TikTok Shop</a>
+        </div>
+      </article>
+      <!-- 10 -->
+      <article class="card" data-title="Limpador de Poros à Vácuo" data-cat="Beleza,Gadgets">
+        <img class="thumb" src="https://images.unsplash.com/photo-1589998059171-988d887df646?q=80&w=1200&auto=format&fit=crop" alt="Limpador de poros"/>
+        <div class="content">
+          <h3 class="title">Limpador de Poros à Vácuo</h3>
+          <div class="price"><span class="sale">R$ 99,00</span> <span class="compare">R$ 149,00</span></div>
+          <div class="tags"><span class="tag">skincare</span><span class="tag">antes & depois</span></div>
+          <p class="desc">Remove cravos e oleosidade com sucção regulável e ponteiras. Resultado visível.</p>
+        </div>
+        <div class="cta">
+          <a class="primary" data-wa href="#">WhatsApp</a>
+          <a data-shopee href="#">Shopee</a>
+          <a data-ml href="#">Mercado Livre</a>
+          <a data-tt href="#">TikTok Shop</a>
+        </div>
+      </article>
+    </section>
+
+    <footer>
+      <p>© <span id="year"></span> Despertar Estelar • Loja estilo Shopify (HTML estático).</p>
+      <p class="note">Para editar: troque títulos, preços e os links dos botões nos atributos data‑* (Shopee, ML, TikTok) ou use o WhatsApp direto.</p>
+    </footer>
+  </main>
+
+  <div class="floating-whats">
+    <a id="waFloat" href="#" target="_blank" rel="noopener">💬 Falar no WhatsApp</a>
+  </div>
+
+  <script>
+    // ====== CONFIGURAÇÕES RÁPIDAS ======
+    const WHATSAPP_NUMERO = "+5513996919111"; // seu número com DDI+DDD
+    const MENSAGEM_PADRAO = encodeURIComponent("Olá! Vim da loja Despertar Estelar. Quero saber mais sobre o produto: ");
+
+    // Opcional: cadastre links dos seus anúncios aqui (ou edite no HTML):
+    const LINKS = {
+      // chave = nome do produto exatamente como no card
+      "Mini Seladora Portátil USB": { shopee: "#", ml: "#", tt: "#" },
+      "Escova Alisadora Portátil 3 em 1": { shopee: "#", ml: "#", tt: "#" },
+      "Mini Projetor Portátil Full HD": { shopee: "#", ml: "#", tt: "#" },
+      "Organizador Giratório 360°": { shopee: "#", ml: "#", tt: "#" },
+      "Mini Umidificador USB LED": { shopee: "#", ml: "#", tt: "#" },
+      "Massageador Facial Roller Jade": { shopee: "#", ml: "#", tt: "#" },
+      "Caneta Removedora de Pelos": { shopee: "#", ml: "#", tt: "#" },
+      "Luminária Lua 3D Touch": { shopee: "#", ml: "#", tt: "#" },
+      "Cortador de Legumes Espiral": { shopee: "#", ml: "#", tt: "#" },
+      "Limpador de Poros à Vácuo": { shopee: "#", ml: "#", tt: "#" }
+    };
+
+    // ====== UTIL ======
+    const $$ = (sel,ctx=document)=>Array.from(ctx.querySelectorAll(sel));
+    const $ = (sel,ctx=document)=>ctx.querySelector(sel);
+    const setYear = ()=> $('#year').textContent = new Date().getFullYear();
+
+    function buildWhatsLink(produto){
+      return `https://wa.me/${WHATSAPP_NUMERO}?text=${MENSAGEM_PADRAO}${encodeURIComponent(produto)}`;
+    }
+
+    // Preenche links de CTAs e WhatsApp
+    function hydrateCTAs(){
+      $$('#grid .card').forEach(card=>{
+        const name = card.querySelector('.title').textContent.trim();
+        const wa = card.querySelector('[data-wa]');
+        if(wa) wa.href = buildWhatsLink(name);
+        const map = LINKS[name] || {};
+        const sh = card.querySelector('[data-shopee]'); if(sh) sh.href = map.shopee || '#';
+        const ml = card.querySelector('[data-ml]'); if(ml) ml.href = map.ml || '#';
+        const tt = card.querySelector('[data-tt]'); if(tt) tt.href = map.tt || '#';
+        // Desabilita botões sem link real
+        [sh,ml,tt].forEach(a=>{ if(a && (!a.href || a.getAttribute('href')==='#')){ a.style.opacity=.55; a.style.pointerEvents='none'; a.title='Adicione o link do seu anúncio'; } });
+      });
+      // flutuante
+      const firstName = $('#grid .card .title')?.textContent?.trim() || 'Produto';
+      $('#waFloat').href = buildWhatsLink(firstName);
+    }
+
+    // Busca e filtro por categoria
+    function setupFilters(){
+      const q = $('#q');
+      const cat = $('#cat');
+      const cards = $$('#grid .card');
+      function apply(){
+        const term = q.value.trim().toLowerCase();
+        const c = cat.value;
+        cards.forEach(card=>{
+          const title = card.dataset.title.toLowerCase();
+          const cats = (card.dataset.cat||'').split(',');
+          const byText = !term || title.includes(term);
+          const byCat = !c || cats.map(x=>x.trim()).includes(c);
+          card.classList.toggle('hide', !(byText && byCat));
+        });
+      }
+      q.addEventListener('input', apply);
+      cat.addEventListener('change', apply);
+      $('#btnReset').addEventListener('click', ()=>{ q.value=''; cat.value=''; apply(); });
+      apply();
+    }
+
+    // Botão falar no WhatsApp topo/geral
+    function setupWhatsAll(){
+      $('#btnWhatsAll').addEventListener('click', ()=>{
+        const msg = encodeURIComponent('Olá! Quero saber sobre os produtos da página Top 10.');
+        const link = `https://wa.me/${WHATSAPP_NUMERO}?text=${msg}`;
+        window.open(link, '_blank');
+      });
+    }
+
+    setYear();
+    hydrateCTAs();
+    setupFilters();
+    setupWhatsAll();
+  </script>
 </body>
-
 </html>

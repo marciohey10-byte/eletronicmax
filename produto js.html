@@ -1,0 +1,40 @@
+<section class="products-section container" aria-labelledby="prod-title">
+  <div class="section-head">
+    <h2 id="prod-title" class="section-title">Destaques</h2>
+    <div class="sort">
+      <label for="sortBy">Ordenar:</label>
+      <select id="sortBy" aria-label="Ordenar por">
+        <option value="featured">Relevância</option>
+        <option value="price-asc">Preço: menor → maior</option>
+        <option value="price-desc">Preço: maior → menor</option>
+        <option value="rating-desc">Melhor avaliados</option>
+      </select>
+    </div>
+  </div>
+
+  <div id="productsGrid" class="products-grid" data-source="/data/products.json">
+    <!-- Render via JS: usa o template abaixo -->
+  </div>
+
+  <template id="tplProductCard">
+    <!-- reutiliza a mesma estrutura do product-card.html -->
+    <article class="product-card">
+      <a class="product-link" href="#">
+        <div class="product-media">
+          <img src="" alt="" loading="lazy" width="600" height="600">
+          <span class="badge"></span>
+        </div>
+        <h3 class="product-title"></h3>
+        <div class="rating">★★★★★ <span class="rating-count"></span></div>
+        <div class="price">
+          <span class="price-current"></span>
+          <span class="price-compare"></span>
+        </div>
+      </a>
+      <div class="product-actions">
+        <button class="btn btn-primary" data-action="add-to-cart">Adicionar ao carrinho</button>
+        <button class="btn btn-outline" data-action="buy-now">Comprar agora</button>
+      </div>
+    </article>
+  </template>
+</section>
